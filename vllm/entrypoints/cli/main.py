@@ -56,6 +56,7 @@ def main():
             len(sys.argv) > 1
             and sys.argv[1] == "bench"
             and "--dummy-gpu-execution" not in sys.argv
+            and "synthetic" not in sys.argv
         ):
             logger.debug(
                 "Bench command detected, must ensure current platform is not "

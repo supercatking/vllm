@@ -1,0 +1,15 @@
+/home/nvidia/vllm_synthetic_host_benchmark/orin_20260609_001328/source/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:
+No module named 'vllm._version'
+  from .version import __version__, __version_tuple__  # isort:skip
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/runpy.py", line 187, in _run_module_as_main
+    mod_name, mod_spec, code = _get_module_details(mod_name, _Error)
+  File "/usr/lib/python3.10/runpy.py", line 110, in _get_module_details
+    __import__(pkg_name)
+  File "/home/nvidia/vllm_synthetic_host_benchmark/orin_20260609_001328/source/vllm/__init__.py", line 14, in <module>
+    import vllm.env_override  # noqa: F401
+  File "/home/nvidia/vllm_synthetic_host_benchmark/orin_20260609_001328/source/vllm/env_override.py", line 90, in <module>
+    from vllm.utils.torch_utils import is_torch_equal, is_torch_equal_or_newer
+  File "/home/nvidia/vllm_synthetic_host_benchmark/orin_20260609_001328/source/vllm/utils/torch_utils.py", line 17, in <module>
+    from torch.library import Library, infer_schema
+ImportError: cannot import name 'infer_schema' from 'torch.library' (/usr/local/lib/python3.10/dist-packages/torch/library.py)

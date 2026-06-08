@@ -1,0 +1,11 @@
+Smoke failed before benchmark initialization due missing/incompatible Python dependencies on orin.
+
+Failing smoke command:
+cd /home/nvidia/vllm_synthetic_host_benchmark/orin_20260609_001328/source && PYTHONPATH=/home/nvidia/vllm_synthetic_host_benchmark/orin_20260609_001328/source python3 -m vllm.entrypoints.cli.main bench synthetic --model Qwen/Qwen2.5-0.5B-Instruct --input-lens 1 --output-lens 1 --batch-size 1 --concurrency 1 --warmup 0 --repeats 1 --dummy-prefill-ms 1 --dummy-decode-ms 0.1 --dummy-output-token-id 0 --gpu-memory-utilization 0.5 --output-dir /home/nvidia/vllm_synthetic_host_benchmark/orin_20260609_001328/results/smoke
+
+Observed blockers:
+- vLLM import fails with: ImportError: cannot import name 'infer_schema' from 'torch.library' (/usr/local/lib/python3.10/dist-packages/torch/library.py)
+- Import probe also showed: transformers FAIL ModuleNotFoundError No module named 'transformers'
+- Installed torch from import probe: /usr/local/lib/python3.10/dist-packages/torch, version 2.5.0a0+872d972e41.nv24.8
+
+No matrix was run.

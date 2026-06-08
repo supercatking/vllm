@@ -1,0 +1,10 @@
+/home/nvidia/vllm_synthetic_host_benchmark/orin_20260609_001328/source/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:
+No module named 'vllm._version'
+  from .version import __version__, __version_tuple__  # isort:skip
+python /usr/bin/python3
+numpy OK /usr/local/lib/python3.10/dist-packages/numpy/__init__.py
+torch OK /usr/local/lib/python3.10/dist-packages/torch/__init__.py
+transformers FAIL ModuleNotFoundError No module named 'transformers'
+vllm FAIL ImportError cannot import name 'infer_schema' from 'torch.library' (/usr/local/lib/python3.10/dist-packages/torch/library.py)
+vllm.benchmarks.synthetic FAIL ImportError cannot import name 'infer_schema' from 'torch.library' (/usr/local/lib/python3.10/dist-packages/torch/library.py)
+vllm.entrypoints.cli.main FAIL ImportError cannot import name 'infer_schema' from 'torch.library' (/usr/local/lib/python3.10/dist-packages/torch/library.py)
