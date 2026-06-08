@@ -52,7 +52,11 @@ def main():
         omni_main()
     else:
         # For 'vllm bench *': use CPU instead of UnspecifiedPlatform by default
-        if len(sys.argv) > 1 and sys.argv[1] == "bench":
+        if (
+            len(sys.argv) > 1
+            and sys.argv[1] == "bench"
+            and "--dummy-gpu-execution" not in sys.argv
+        ):
             logger.debug(
                 "Bench command detected, must ensure current platform is not "
                 "UnspecifiedPlatform to avoid device type inference error"
