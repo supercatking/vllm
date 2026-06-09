@@ -30,6 +30,10 @@ from vllm.v1.worker.worker_base import CompilationTimes
 logger = init_logger(__name__)
 
 
+def _is_synthetic_dummy_execution() -> bool:
+    return os.environ.get("BENCH_DUMMY_GPU_EXECUTION") == "1"
+
+
 class CPUWorker(Worker):
     def __init__(
         self,
@@ -57,6 +61,8 @@ class CPUWorker(Worker):
 
         torch.ops._C.init_cpu_memory_env([cpu_core.numa_node])
 
+        self.synthetic_dummy_execution = _is_synthetic_dummy_execution()
+
         memory_status = get_memory_node_info(cpu_core.numa_node)
         memory_fraction = vllm_config.cache_config.gpu_memory_utilization
         self.requested_cpu_memory = math.ceil(
@@ -65,7 +71,8 @@ class CPUWorker(Worker):
         available_memory = memory_status.available_memory
 
         if (
-            vllm_config.cache_config.kv_cache_memory_bytes is None
+            not self.synthetic_dummy_execution
+            and vllm_config.cache_config.kv_cache_memory_bytes is None
             and self.requested_cpu_memory > available_memory
         ):
             raise ValueError(
@@ -167,6 +174,13 @@ class CPUWorker(Worker):
         pass
 
     def determine_available_memory(self) -> int:
+        if self.synthetic_dummy_execution:
+            logger.info(
+                "Synthetic dummy execution enabled; using minimal CPU KV cache "
+                "reservation."
+            )
+            return 256 * 1024 * 1024
+
         self.model_runner.warming_up_model()
 
         allowed_cpu_list = get_allowed_cpu_list()
@@ -226,6 +240,10 @@ class CPUWorker(Worker):
         return kv_cache_size
 
     def compile_or_warm_up_model(self) -> CompilationTimes:
+        if self.synthetic_dummy_execution:
+            logger.info("Synthetic dummy execution enabled; skipping CPU model warmup.")
+            return CompilationTimes(language_model=0.0, encoder=0.0)
+
         # Note: the model has been compiled in determine_available_memory(),
         # Only compile here for models without kv cache
         if len(self.model_runner.kv_caches) == 0:

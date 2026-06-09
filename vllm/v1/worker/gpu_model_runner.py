@@ -4,6 +4,8 @@
 import functools
 import gc
 import itertools
+import json
+import os
 import threading
 import time
 from collections import defaultdict
@@ -412,6 +414,16 @@ class ExecuteModelState(NamedTuple):
     ec_connector_output: ECConnectorOutput | None
     cudagraph_stats: CUDAGraphStat | None
     slot_mappings: dict[str, torch.Tensor] | list[dict[str, torch.Tensor]] | None
+
+
+@dataclass
+class DummyGPUExecutionState:
+    scheduler_output: "SchedulerOutput"
+    step_type: str
+    delay_s: float
+    start_time_s: float
+    num_reqs: int
+    total_num_scheduled_tokens: int
 
 
 class GPUModelRunner(
@@ -890,6 +902,24 @@ class GPUModelRunner(
 
         # Ephemeral state transferred between execute_model() and sample_tokens().
         self.execute_model_state: ExecuteModelState | None = None
+        self.dummy_gpu_execution = (
+            os.environ.get("BENCH_DUMMY_GPU_EXECUTION") == "1"
+        )
+        self.dummy_gpu_prefill_delay_s = (
+            float(os.environ.get("BENCH_DUMMY_GPU_PREFILL_DELAY_MS", "5.0"))
+            / 1000.0
+        )
+        self.dummy_gpu_decode_delay_s = (
+            float(os.environ.get("BENCH_DUMMY_GPU_DECODE_DELAY_MS", "1.0"))
+            / 1000.0
+        )
+        self.dummy_gpu_token_id = int(
+            os.environ.get("BENCH_DUMMY_GPU_TOKEN_ID", "0")
+        )
+        self.dummy_gpu_latency_log = os.environ.get(
+            "BENCH_DUMMY_GPU_LATENCY_LOG"
+        )
+        self.dummy_gpu_execution_state: DummyGPUExecutionState | None = None
         self.kv_connector_output: KVConnectorOutput | None = None
         self.mamba_state_idx: dict[str, int] = {}
         self._mamba_bufs: mamba_utils.MambaBuffers | None = None
@@ -899,6 +929,172 @@ class GPUModelRunner(
                 self.max_num_reqs, dtype=torch.int32
             )
         self.layerwise_nvtx_hooks_registered = False
+
+    def _classify_dummy_gpu_step(self, scheduler_output: "SchedulerOutput") -> str:
+        num_reqs = self.input_batch.num_reqs
+        req_ids = self.input_batch.req_ids
+        if num_reqs == 0:
+            return "empty"
+
+        scheduled_tokens = [
+            scheduler_output.num_scheduled_tokens.get(req_id, 0) for req_id in req_ids
+        ]
+        computed_tokens = self.input_batch.num_computed_tokens_cpu[:num_reqs]
+        has_multi_token_schedule = any(num_tokens > 1 for num_tokens in scheduled_tokens)
+        has_initial_prefill = any(int(num_tokens) == 0 for num_tokens in computed_tokens)
+
+        if has_initial_prefill:
+            return "prefill"
+        if has_multi_token_schedule:
+            return "prefill_chunk"
+        return "decode"
+
+    def _execute_dummy_gpu_model(
+        self,
+        scheduler_output: "SchedulerOutput",
+    ) -> ModelRunnerOutput | None:
+        if self.dummy_gpu_execution_state is not None:
+            raise RuntimeError(
+                "State error: sample_tokens() must be called after dummy "
+                "execute_model() returns None."
+            )
+        if self.is_pooling_model:
+            raise NotImplementedError(
+                "Dummy GPU execution only supports generation models."
+            )
+        if self.speculative_config is not None:
+            raise NotImplementedError(
+                "Dummy GPU execution does not support speculative decoding."
+            )
+        if self.use_async_scheduling:
+            raise NotImplementedError(
+                "Dummy GPU execution requires synchronous scheduling."
+            )
+        if not get_pp_group().is_last_rank or self.broadcast_pp_output:
+            raise NotImplementedError(
+                "Dummy GPU execution only supports the last pipeline-parallel "
+                "rank without broadcasted PP output."
+            )
+        if scheduler_output.scheduled_encoder_inputs:
+            raise NotImplementedError(
+                "Dummy GPU execution does not support encoder inputs."
+            )
+        if self.num_prompt_logprobs:
+            raise NotImplementedError(
+                "Dummy GPU execution does not support prompt logprobs."
+            )
+        if has_kv_transfer_group():
+            raise NotImplementedError(
+                "Dummy GPU execution does not support KV transfer connectors."
+            )
+
+        start_time_s = time.perf_counter()
+        with (
+            record_function_or_nullcontext("gpu_model_runner: dummy_preprocess"),
+            self.synchronize_input_prep(),
+        ):
+            deferred_state_corrections_fn = self._update_states(scheduler_output)
+            if deferred_state_corrections_fn:
+                raise NotImplementedError(
+                    "Dummy GPU execution does not support deferred speculative "
+                    "decode corrections."
+                )
+
+        if not scheduler_output.total_num_scheduled_tokens:
+            return EMPTY_MODEL_RUNNER_OUTPUT
+
+        num_reqs = self.input_batch.num_reqs
+        self.discard_request_mask.np[:num_reqs] = False
+        step_type = self._classify_dummy_gpu_step(scheduler_output)
+        delay_s = (
+            self.dummy_gpu_decode_delay_s
+            if step_type == "decode"
+            else self.dummy_gpu_prefill_delay_s
+        )
+        self.dummy_gpu_execution_state = DummyGPUExecutionState(
+            scheduler_output=scheduler_output,
+            step_type=step_type,
+            delay_s=delay_s,
+            start_time_s=start_time_s,
+            num_reqs=num_reqs,
+            total_num_scheduled_tokens=scheduler_output.total_num_scheduled_tokens,
+        )
+        return None
+
+    def _write_dummy_gpu_latency_record(
+        self,
+        state: DummyGPUExecutionState,
+        latency_ms: float,
+    ) -> None:
+        if not self.dummy_gpu_latency_log:
+            return
+
+        record = {
+            "step_type": state.step_type,
+            "latency_ms": latency_ms,
+            "delay_ms": state.delay_s * 1000.0,
+            "num_reqs": state.num_reqs,
+            "total_num_scheduled_tokens": state.total_num_scheduled_tokens,
+            "dummy_token_id": self.dummy_gpu_token_id,
+        }
+        with open(self.dummy_gpu_latency_log, "a") as f:
+            f.write(json.dumps(record) + "\n")
+
+    def _sample_dummy_gpu_tokens(self) -> ModelRunnerOutput:
+        state = self.dummy_gpu_execution_state
+        if state is None:
+            raise RuntimeError("Missing dummy GPU execution state.")
+
+        self.dummy_gpu_execution_state = None
+        scheduler_output = state.scheduler_output
+        time.sleep(state.delay_s)
+
+        num_reqs = self.input_batch.num_reqs
+        sampled_token_ids = torch.full(
+            (num_reqs, 1),
+            self.dummy_gpu_token_id,
+            dtype=torch.int64,
+            device=self.device,
+        )
+        sampler_output = SamplerOutput(
+            sampled_token_ids=sampled_token_ids,
+            logprobs_tensors=None,
+        )
+        self._update_states_after_model_execute(
+            sampler_output.sampled_token_ids, scheduler_output
+        )
+        (
+            num_nans_in_logits,
+            logprobs_lists,
+            valid_sampled_token_ids,
+            prompt_logprobs_dict,
+            req_ids_output_copy,
+            req_id_to_index_output_copy,
+            invalid_req_indices,
+        ) = self._bookkeeping_sync(
+            scheduler_output,
+            sampler_output,
+            logits=None,
+            hidden_states=torch.empty(0, device=self.device, dtype=self.dtype),
+            num_scheduled_tokens=scheduler_output.total_num_scheduled_tokens,
+        )
+        assert not invalid_req_indices
+
+        output = ModelRunnerOutput(
+            req_ids=req_ids_output_copy,
+            req_id_to_index=req_id_to_index_output_copy,
+            sampled_token_ids=valid_sampled_token_ids,
+            logprobs=logprobs_lists,
+            prompt_logprobs_dict=prompt_logprobs_dict,
+            kv_connector_output=None,
+            ec_connector_output=None,
+            num_nans_in_logits=num_nans_in_logits,
+            cudagraph_stats=None,
+            routed_experts=None,
+        )
+        latency_ms = (time.perf_counter() - state.start_time_s) * 1000.0
+        self._write_dummy_gpu_latency_record(state, latency_ms)
+        return output
 
     def update_max_model_len(self, max_model_len: int) -> None:
         self.max_model_len = max_model_len
@@ -4009,6 +4205,8 @@ class GPUModelRunner(
                 "State error: sample_tokens() must be called "
                 "after execute_model() returns None."
             )
+        if self.dummy_gpu_execution:
+            return self._execute_dummy_gpu_model(scheduler_output)
 
         if self.routed_experts_initialized:
             self.routed_experts_capturer.clear_buffer()
@@ -4381,6 +4579,13 @@ class GPUModelRunner(
     def sample_tokens(
         self, grammar_output: "GrammarOutput | None"
     ) -> ModelRunnerOutput | AsyncModelRunnerOutput | IntermediateTensors:
+        if self.dummy_gpu_execution_state is not None:
+            if grammar_output is not None:
+                raise NotImplementedError(
+                    "Dummy GPU execution does not support structured output."
+                )
+            return self._sample_dummy_gpu_tokens()
+
         if self.execute_model_state is None:
             kv_connector_output = self.kv_connector_output
             self.kv_connector_output = None

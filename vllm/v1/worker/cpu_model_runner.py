@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
+import os
 from contextlib import contextmanager
 from typing import Any
 
@@ -10,6 +11,7 @@ import vllm.utils.cpu_triton_utils as cpu_tl
 from vllm.config import VllmConfig
 from vllm.logger import init_logger
 from vllm.model_executor.model_loader import get_model
+from vllm.tasks import GenerationTask, SupportedTask
 from vllm.tracing import instrument
 from vllm.v1.core.sched.output import SchedulerOutput
 from vllm.v1.kv_cache_interface import KVCacheConfig
@@ -96,6 +98,10 @@ class CPUModelRunner(GPUModelRunner):
 
     @instrument(span_name="Loading (CPU)")
     def load_model(self, load_dummy_weights: bool = False) -> None:
+        if os.environ.get("BENCH_DUMMY_GPU_EXECUTION") == "1":
+            logger.info("Synthetic dummy execution enabled; skipping CPU model load.")
+            return
+
         if load_dummy_weights:
             raise ValueError(
                 "Loading dummy weights (needed for elastic EP scale-up) "
@@ -115,6 +121,16 @@ class CPUModelRunner(GPUModelRunner):
 
     def get_model(self) -> nn.Module:
         return self.model
+
+    def get_supported_generation_tasks(self) -> list[GenerationTask]:
+        if os.environ.get("BENCH_DUMMY_GPU_EXECUTION") == "1":
+            return ["generate"]
+        return super().get_supported_generation_tasks()
+
+    def get_supported_tasks(self) -> tuple[SupportedTask, ...]:
+        if os.environ.get("BENCH_DUMMY_GPU_EXECUTION") == "1":
+            return ("generate",)
+        return super().get_supported_tasks()
 
     @instrument(span_name="Warmup (CPU)")
     def warming_up_model(self) -> None:
