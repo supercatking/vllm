@@ -1,0 +1,572 @@
+{
+    "avg_latency": 0.6955026089999592,
+    "latencies": [
+        0.6955026089999592
+    ],
+    "percentiles": {
+        "10": 0.6955026089999592,
+        "25": 0.6955026089999592,
+        "50": 0.6955026089999592,
+        "75": 0.6955026089999592,
+        "90": 0.6955026089999592,
+        "99": 0.6955026089999592
+    },
+    "dummy_gpu_latency": {
+        "dummy_gpu_execution": true,
+        "dummy_prefill_delay_ms": 5.0,
+        "dummy_decode_delay_ms": 1.0,
+        "dummy_token_id": 0,
+        "ttft_ms": {
+            "count": 1,
+            "avg": 12.008079997031018,
+            "p50": 12.008079997031018,
+            "p90": 12.008079997031018,
+            "p99": 12.008079997031018
+        },
+        "tpot_ms": 4.182741969882969,
+        "decode_token_count": 63,
+        "decoding_tps": 239.07762113950804,
+        "prefill_latency_ms": {
+            "count": 1,
+            "avg": 12.008079997031018,
+            "p50": 12.008079997031018,
+            "p90": 12.008079997031018,
+            "p99": 12.008079997031018
+        },
+        "prefill_chunk_latency_ms": {
+            "count": 0,
+            "avg": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0
+        },
+        "decode_latency_ms": {
+            "count": 63,
+            "avg": 4.182741969882969,
+            "p50": 4.14402800379321,
+            "p90": 4.33082879462745,
+            "p99": 4.785691135621165
+        },
+        "total_step_latency_ms": {
+            "count": 64,
+            "avg": 4.305012876557157,
+            "p50": 4.145528007938992,
+            "p90": 4.349429007561412,
+            "p99": 7.636480385990563
+        },
+        "step_records": [
+            {
+                "step_type": "prefill",
+                "latency_ms": 12.008079997031018,
+                "delay_ms": 5.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 128,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 5.06903299537953,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.612029995769262,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.13502799347043,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.0980269986903295,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.039027000544593,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.134028000407852,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.194028006168082,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.059027007315308,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.06902699614875,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.099027006304823,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.147028012084775,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.016027000034228,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.176027010544203,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.22102800803259,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.06902699614875,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.136026997002773,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.192027990939096,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.381029008072801,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.288028008886613,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.15802800853271,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.290027995011769,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.208027996355668,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.248028009897098,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.0770270134089515,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.185028010397218,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.196027002763003,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.248027995345183,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.1020270000444725,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.110027002752759,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.089027002919465,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.176026995992288,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.0620270010549575,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.1990280005848035,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.225027994834818,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.392028989968821,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.341028994531371,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.100026999367401,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.136026997002773,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.353029013145715,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.262028989614919,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.050026996992528,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.120027006138116,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.1020270000444725,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.113026996492408,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.086027009179816,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.149027998209931,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.418028998770751,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.216027999063954,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.155026996158995,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.22402800177224,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.14402800379321,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.245028001605533,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.173028006334789,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.126027008169331,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.1020270000444725,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.11202700342983,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.084027008502744,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.091027003596537,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.1020270000444725,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.023026995128021,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.084027008502744,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.1610270127421245,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            },
+            {
+                "step_type": "decode",
+                "latency_ms": 4.140028002439067,
+                "delay_ms": 1.0,
+                "num_reqs": 1,
+                "total_num_scheduled_tokens": 1,
+                "dummy_token_id": 0
+            }
+        ]
+    }
+}

@@ -15,25 +15,37 @@ logger = init_logger(__name__)
 
 
 def main():
-    import vllm.entrypoints.cli.benchmark.main
-    import vllm.entrypoints.cli.collect_env
-    import vllm.entrypoints.cli.launch
-    import vllm.entrypoints.cli.openai
-    import vllm.entrypoints.cli.run_batch
-    import vllm.entrypoints.cli.serve
     from vllm.entrypoints.utils import VLLM_SUBCMD_PARSER_EPILOG, cli_env_setup
     from vllm.utils.argparse_utils import FlexibleArgumentParser
 
-    CMD_MODULES = [
-        vllm.entrypoints.cli.openai,
-        vllm.entrypoints.cli.serve,
-        vllm.entrypoints.cli.launch,
-        vllm.entrypoints.cli.benchmark.main,
-        vllm.entrypoints.cli.collect_env,
-        vllm.entrypoints.cli.run_batch,
-    ]
-
     cli_env_setup()
+
+    # Avoid importing serving-only dependencies for benchmark invocations.
+    # Some minimal benchmark environments intentionally install only the
+    # scheduler/runtime dependencies needed by `vllm bench`.
+    first_positional = next(
+        (arg for arg in sys.argv[1:] if not arg.startswith("-")), None
+    )
+    if first_positional == "bench":
+        import vllm.entrypoints.cli.benchmark.main
+
+        CMD_MODULES = [vllm.entrypoints.cli.benchmark.main]
+    else:
+        import vllm.entrypoints.cli.benchmark.main
+        import vllm.entrypoints.cli.collect_env
+        import vllm.entrypoints.cli.launch
+        import vllm.entrypoints.cli.openai
+        import vllm.entrypoints.cli.run_batch
+        import vllm.entrypoints.cli.serve
+
+        CMD_MODULES = [
+            vllm.entrypoints.cli.openai,
+            vllm.entrypoints.cli.serve,
+            vllm.entrypoints.cli.launch,
+            vllm.entrypoints.cli.benchmark.main,
+            vllm.entrypoints.cli.collect_env,
+            vllm.entrypoints.cli.run_batch,
+        ]
 
     # If `--omni` arg is passed to the CLI, delegate to vLLM Omni's entrypoint handling
     if "--omni" in sys.argv:

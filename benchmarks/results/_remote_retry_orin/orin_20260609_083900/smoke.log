@@ -1,0 +1,50 @@
+DEBUG 06-09 09:00:21 [plugins/__init__.py:36] No plugins for group vllm.platform_plugins found.
+DEBUG 06-09 09:00:21 [platforms/__init__.py:37] Checking if TPU platform is available.
+DEBUG 06-09 09:00:21 [platforms/__init__.py:56] TPU platform is not available because: No module named 'libtpu'
+DEBUG 06-09 09:00:21 [platforms/__init__.py:62] Checking if CUDA platform is available.
+DEBUG 06-09 09:00:21 [platforms/__init__.py:81] CUDA platform is not available because vLLM is built with CPU.
+DEBUG 06-09 09:00:21 [platforms/__init__.py:113] Checking if ROCm platform is available.
+DEBUG 06-09 09:00:21 [platforms/__init__.py:127] ROCm platform is not available because: No module named 'amdsmi'
+DEBUG 06-09 09:00:21 [platforms/__init__.py:134] Checking if XPU platform is available.
+DEBUG 06-09 09:00:21 [platforms/__init__.py:149] XPU platform is not available because: module 'torch.distributed' has no attribute 'is_xccl_available'
+DEBUG 06-09 09:00:21 [platforms/__init__.py:165] Checking if CPU platform is available.
+DEBUG 06-09 09:00:21 [platforms/__init__.py:169] Confirmed CPU platform is available because vLLM is built with CPU.
+DEBUG 06-09 09:00:21 [platforms/__init__.py:165] Checking if CPU platform is available.
+DEBUG 06-09 09:00:21 [platforms/__init__.py:169] Confirmed CPU platform is available because vLLM is built with CPU.
+DEBUG 06-09 09:00:21 [platforms/__init__.py:246] Automatically detected platform cpu.
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/usr/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/nvidia/vllm_synthetic_host_benchmark/orin_20260609_083900/src/vllm/entrypoints/cli/main.py", line 103, in <module>
+    main()
+  File "/home/nvidia/vllm_synthetic_host_benchmark/orin_20260609_083900/src/vllm/entrypoints/cli/main.py", line 18, in main
+    import vllm.entrypoints.cli.benchmark.main
+  File "/home/nvidia/vllm_synthetic_host_benchmark/orin_20260609_083900/src/vllm/entrypoints/cli/benchmark/main.py", line 10, in <module>
+    from vllm.entrypoints.utils import VLLM_SUBCMD_PARSER_EPILOG
+  File "/home/nvidia/vllm_synthetic_host_benchmark/orin_20260609_083900/src/vllm/entrypoints/utils.py", line 20, in <module>
+    from vllm.engine.arg_utils import EngineArgs
+  File "/home/nvidia/vllm_synthetic_host_benchmark/orin_20260609_083900/src/vllm/engine/arg_utils.py", line 35, in <module>
+    from vllm.config import (
+  File "/home/nvidia/vllm_synthetic_host_benchmark/orin_20260609_083900/src/vllm/config/__init__.py", line 20, in <module>
+    from vllm.config.model import (
+  File "/home/nvidia/vllm_synthetic_host_benchmark/orin_20260609_083900/src/vllm/config/model.py", line 24, in <module>
+    from vllm.config.quantization import QuantizationConfigArgs
+  File "/home/nvidia/vllm_synthetic_host_benchmark/orin_20260609_083900/src/vllm/config/quantization.py", line 10, in <module>
+    from vllm.model_executor.layers.quantization.utils.quant_utils import (
+  File "/home/nvidia/vllm_synthetic_host_benchmark/orin_20260609_083900/src/vllm/model_executor/__init__.py", line 4, in <module>
+    from vllm.model_executor.parameter import BasevLLMParameter, PackedvLLMParameter
+  File "/home/nvidia/vllm_synthetic_host_benchmark/orin_20260609_083900/src/vllm/model_executor/parameter.py", line 11, in <module>
+    from vllm.distributed import (
+  File "/home/nvidia/vllm_synthetic_host_benchmark/orin_20260609_083900/src/vllm/distributed/__init__.py", line 4, in <module>
+    from .communication_op import *
+  File "/home/nvidia/vllm_synthetic_host_benchmark/orin_20260609_083900/src/vllm/distributed/communication_op.py", line 9, in <module>
+    from .parallel_state import get_tp_group
+  File "/home/nvidia/vllm_synthetic_host_benchmark/orin_20260609_083900/src/vllm/distributed/parallel_state.py", line 41, in <module>
+    import torch.distributed._functional_collectives as funcol
+  File "/usr/local/lib/python3.10/dist-packages/torch/distributed/_functional_collectives.py", line 8, in <module>
+    import torch.distributed.distributed_c10d as c10d
+  File "/usr/local/lib/python3.10/dist-packages/torch/distributed/distributed_c10d.py", line 22, in <module>
+    from torch._C._distributed_c10d import (
+ModuleNotFoundError: No module named 'torch._C._distributed_c10d'; 'torch._C' is not a package

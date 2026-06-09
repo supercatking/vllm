@@ -1,0 +1,45 @@
+{
+  "started_at": "2026-06-09T08:57:42+0800",
+  "repo": "/home/eswin/vllm",
+  "model": "/home/eswin/vllm_synthetic_host_benchmark/models/tiny-llama-2048",
+  "tokenizer": "/home/eswin/vllm_synthetic_host_benchmark/models/tiny-llama-2048",
+  "input_lens": [
+    32
+  ],
+  "output_lens": [
+    64
+  ],
+  "warmup": 1,
+  "repeats": 1,
+  "num_prompts": 1,
+  "max_model_len": 96,
+  "env": {
+    "VLLM_TARGET_DEVICE": "cpu",
+    "VLLM_CPU_KVCACHE_SPACE": "2",
+    "OMP_NUM_THREADS": "7",
+    "VLLM_CPU_OMP_THREADS_BIND": "nobind",
+    "VLLM_WORKER_MULTIPROC_METHOD": "fork",
+    "VLLM_ENGINE_ITERATION_TIMEOUT_S": "3600",
+    "VLLM_EXECUTE_MODEL_TIMEOUT_SECONDS": "3600"
+  },
+  "runs": [
+    {
+      "shape": "in32_out64",
+      "input_len": 32,
+      "output_len": 64,
+      "repeat": 1,
+      "elapsed_time": 1.7428191609942587,
+      "num_requests": 1,
+      "total_prompt_tokens": 32,
+      "total_output_tokens": 64,
+      "total_num_tokens": 96,
+      "requests_per_second": 0.5737829961827544,
+      "tokens_per_second": 55.08316763354443,
+      "output_tokens_per_second": 36.72211175569628,
+      "status": "ok",
+      "command": "vllm bench synthetic",
+      "json": "/home/eswin/vllm_synthetic_host_benchmark/results/smoke_direct_20260609-085741/in32_out64/rep1.json"
+    }
+  ],
+  "finished_at": "2026-06-09T08:59:18+0800"
+}

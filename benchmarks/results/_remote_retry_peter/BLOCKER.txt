@@ -1,0 +1,55 @@
+Remote synthetic benchmark retry on peter: BLOCKED
+Date: 2026-06-09 Asia/Hong_Kong
+
+Local result directory:
+/home/zyz/vLLM_deploy/vllm/benchmarks/results/_remote_retry_peter
+
+Remote benchmark work directory used:
+/home/ubuntu/vllm_synthetic_host_benchmark
+
+Remote run directory created:
+/home/ubuntu/vllm_synthetic_host_benchmark/run_20260609_004232
+Symlink:
+/home/ubuntu/vllm_synthetic_host_benchmark/latest_run -> /home/ubuntu/vllm_synthetic_host_benchmark/run_20260609_004232
+
+Isolation performed:
+- Did not sudo.
+- Did not modify /home/ubuntu/vllm.
+- Did not modify /home/ubuntu/vllm_p550dev_validation.
+- Installed model-hosting-container-standards only into:
+  /home/ubuntu/vllm_synthetic_host_benchmark/py_overlay_nodeps
+- Used PYTHONPATH=/home/ubuntu/vllm_synthetic_host_benchmark/py_overlay_nodeps.
+
+CLI/dependency findings:
+1. `vllm bench --help` with only model-hosting-container-standards overlay advances past the original missing dependency but then fails on missing `openai_harmony`.
+2. `pip install --no-deps --target ... openai-harmony` failed for all available satisfying releases tried: 0.0.8, 0.0.6, 0.0.4, 0.0.3. Each failed during maturin metadata generation because Cargo.lock version 4 requires `-Znext-lockfile-bump`.
+3. Direct import/run of `vllm.benchmarks.throughput` avoids the broad CLI launcher and was used for smoke.
+4. This checkout does not appear to have a standalone `vllm bench synthetic` subcommand. Synthetic random workload is represented by `vllm bench throughput --dataset-name random` with `--random-input-len` and `--random-output-len`.
+
+Smoke command 1 failed on CPU memory reservation:
+cd /home/ubuntu/vllm_p550dev_validation
+export PATH=/home/ubuntu/vllm/.venv-p550/bin:$PATH
+export PYTHONPATH=$HOME/vllm_synthetic_host_benchmark/py_overlay_nodeps
+/home/ubuntu/vllm/.venv-p550/bin/python -c 'import argparse; from vllm.benchmarks.throughput import add_cli_args, main; p=argparse.ArgumentParser(prog="vllm bench throughput"); add_cli_args(p); main(p.parse_args())' --backend vllm --model /home/ubuntu/vllm/.p550_models/smollm2-135m-instruct --tokenizer /home/ubuntu/vllm/.p550_models/smollm2-135m-instruct --dataset-name random --random-input-len 32 --random-output-len 16 --random-range-ratio 0 --num-warmups 1 --num-prompts 1 --disable-detokenize --output-json /home/ubuntu/vllm_synthetic_host_benchmark/latest_run/smoke_i32_o16.json
+
+Root cause excerpt:
+Available memory on node 0 (7.7/9.65 GiB) on startup is less than desired CPU memory utilization (0.92, 8.88 GiB). On the CPU backend, the `--gpu-memory-utilization` flag controls the fraction of CPU memory reserved.
+
+Smoke command 2 lowered memory and disabled compilation via --optimization-level 0:
+cd /home/ubuntu/vllm_p550dev_validation
+export PATH=/home/ubuntu/vllm/.venv-p550/bin:$PATH
+export PYTHONPATH=$HOME/vllm_synthetic_host_benchmark/py_overlay_nodeps
+/home/ubuntu/vllm/.venv-p550/bin/python -c 'import argparse; from vllm.benchmarks.throughput import add_cli_args, main; p=argparse.ArgumentParser(prog="vllm bench throughput"); add_cli_args(p); main(p.parse_args())' --backend vllm --model /home/ubuntu/vllm/.p550_models/smollm2-135m-instruct --tokenizer /home/ubuntu/vllm/.p550_models/smollm2-135m-instruct --dataset-name random --random-input-len 32 --random-output-len 16 --random-range-ratio 0 --num-warmups 1 --num-prompts 1 --disable-detokenize --max-model-len 2048 --gpu-memory-utilization 0.5 --optimization-level 0 --output-json /home/ubuntu/vllm_synthetic_host_benchmark/latest_run/smoke_i32_o16_opt0.json
+
+Observed state before SSH became unavailable:
+- Engine loaded smollm2-135m weights successfully.
+- Worker entered "Warming up model for the compilation..." despite compilation_config.mode NONE.
+- EngineCore repeatedly logged: "No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work..."
+- The local command timed out after about 10 minutes.
+- Subsequent SSH attempts timed out during banner exchange, preventing remote cleanup/copy-back.
+
+Result status:
+- Smoke did not pass.
+- Matrix was not run.
+- No metrics summary is available.
+- Remote copy-back could not be completed because SSH to peter stopped accepting banner exchange after the long-running smoke.

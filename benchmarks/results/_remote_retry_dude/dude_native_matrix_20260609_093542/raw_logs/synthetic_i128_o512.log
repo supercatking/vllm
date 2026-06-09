@@ -1,0 +1,73 @@
+$ /home/eswin/vllm/.venv-p550/bin/python -m vllm.entrypoints.cli.main bench latency --model /home/eswin/vllm/.p550_models/qwen2.5-0.5b-instruct --load-format dummy --enforce-eager --input-len 128 --output-len 512 --batch-size 1 --gpu-memory-utilization 0.05 --num-iters-warmup 0 --num-iters 1 --dummy-gpu-execution --dummy-prefill-delay-ms 5.0 --dummy-decode-delay-ms 1.0 --dummy-token-id 0 --output-json /home/eswin/vllm_synthetic_host_benchmark/dude_native_matrix_20260609_093542/raw_logs/synthetic_i128_o512.json
+
+STDOUT:
+WARNING 06-09 09:47:50 [config.py:71] Support for Transformers v4 is deprecated. The Transformers v4 codepath will become unmaintained in vLLM v0.22.0 and will be removed in vLLM v0.24.0. Please upgrade to Transformers v5: pip install --upgrade transformers
+INFO 06-09 09:47:51 [importing.py:81] Triton not installed or not compatible; certain GPU-related functions will not be available.
+INFO 06-09 09:48:07 [utils.py:278] non-default args: {'load_format': 'dummy', 'enable_prefix_caching': False, 'gpu_memory_utilization': 0.05, 'enforce_eager': True, 'enable_lora': None, 'reasoning_parser_plugin': '', 'async_scheduling': False, 'model': '/home/eswin/vllm/.p550_models/qwen2.5-0.5b-instruct'}
+WARNING 06-09 09:48:07 [envs.py:2056] Unknown vLLM environment variable detected: VLLM_USE_V1
+INFO 06-09 09:48:07 [model.py:610] Resolved architecture: Qwen2ForCausalLM
+INFO 06-09 09:48:07 [model.py:1744] Using max model len 32768
+INFO 06-09 09:48:07 [arg_utils.py:2427] Chunked prefill is not supported forRISC-V CPUs; disabling it for V1 backend.
+INFO 06-09 09:48:07 [arg_utils.py:2433] Prefix caching is not supported for RISC-V CPUs; disabling it for V1 backend.
+INFO 06-09 09:48:07 [vllm.py:999] Asynchronous scheduling is disabled.
+WARNING 06-09 09:48:07 [vllm.py:1055] Enforce eager set, disabling torch.compile and CUDAGraphs. This is equivalent to setting -cc.mode=none -cc.cudagraph_mode=none
+WARNING 06-09 09:48:07 [vllm.py:1097] Inductor compilation was disabled by user settings, optimizations settings that are only active during inductor compilation will be ignored.
+INFO 06-09 09:48:07 [kernel.py:270] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+INFO 06-09 09:48:07 [compilation.py:321] Enabled custom fusions: norm_quant, act_quant
+WARNING 06-09 09:48:34 [config.py:71] Support for Transformers v4 is deprecated. The Transformers v4 codepath will become unmaintained in vLLM v0.22.0 and will be removed in vLLM v0.24.0. Please upgrade to Transformers v5: pip install --upgrade transformers
+INFO 06-09 09:48:36 [importing.py:81] Triton not installed or not compatible; certain GPU-related functions will not be available.
+(EngineCore pid=15756) INFO 06-09 09:48:40 [core.py:113] Initializing a V1 LLM engine (v0.1.dev17216+gf35915f86) with config: model='/home/eswin/vllm/.p550_models/qwen2.5-0.5b-instruct', speculative_config=None, tokenizer='/home/eswin/vllm/.p550_models/qwen2.5-0.5b-instruct', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=32768, download_dir=None, load_format=dummy, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=True, quantization=None, quantization_config=None, enforce_eager=True, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cpu, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False), seed=0, served_model_name=/home/eswin/vllm/.p550_models/qwen2.5-0.5b-instruct, enable_prefix_caching=False, enable_chunked_prefill=False, pooler_config=None, compilation_config={'mode': <CompilationMode.NONE: 0>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['all'], 'ir_enable_torch_wrap': False, 'splitting_ops': [], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_vision_items_per_batch': 0, 'encoder_cudagraph_max_frames_per_batch': None, 'compile_sizes': None, 'compile_ranges_endpoints': [32768], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'size_asserts': False, 'alignment_asserts': False, 'scalar_asserts': False}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.NONE: 0>, 'cudagraph_num_of_warmups': 0, 'cudagraph_capture_sizes': [], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': True, 'fuse_act_quant': True, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False, 'fuse_rope_kvcache_cat_mla': False, 'fuse_act_padding': False}, 'max_cudagraph_capture_size': None, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': True, 'static_all_moe_layers': []}, kernel_config=KernelConfig(ir_op_priority=IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native']), enable_flashinfer_autotune=True, moe_backend='auto', linear_backend='auto')
+(EngineCore pid=15756) INFO 06-09 09:48:40 [multiproc_executor.py:140] DP group leader: node_rank=0, node_rank_within_dp=0, master_addr=127.0.0.1, mq_connect_ip=192.168.1.57 (local), world_size=1, local_world_size=1
+(EngineCore pid=15756) INFO 06-09 09:48:40 [ompmultiprocessing.py:185] OpenMP thread binding info: 
+(EngineCore pid=15756) INFO 06-09 09:48:40 [ompmultiprocessing.py:185] 	VLLM_CPU_OMP_THREADS_BIND='auto', auto_setup=True, skip_setup=False
+(EngineCore pid=15756) INFO 06-09 09:48:40 [ompmultiprocessing.py:185] 	local_world_size=1, reserve_cpu_num=1
+(EngineCore pid=15756) INFO 06-09 09:48:40 [ompmultiprocessing.py:185] 	local_rank=0, core ids=[0, 1, 2]
+(EngineCore pid=15756) INFO 06-09 09:48:40 [ompmultiprocessing.py:185] 	reserved_cpus=[3]
+WARNING 06-09 09:49:09 [config.py:71] Support for Transformers v4 is deprecated. The Transformers v4 codepath will become unmaintained in vLLM v0.22.0 and will be removed in vLLM v0.24.0. Please upgrade to Transformers v5: pip install --upgrade transformers
+INFO 06-09 09:49:10 [importing.py:81] Triton not installed or not compatible; certain GPU-related functions will not be available.
+(Worker pid=15803) WARNING 06-09 09:49:28 [cpu_worker.py:115] libtcmalloc is not found in LD_PRELOAD. For best performance, please follow the section `set LD_PRELOAD` in https://docs.vllm.ai/en/latest/getting_started/installation/cpu/ to setup required pre-loaded libraries.
+(Worker pid=15803) INFO 06-09 09:49:28 [parallel_state.py:1441] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://127.0.0.1:44691 backend=gloo
+(Worker pid=15803) INFO 06-09 09:49:28 [parallel_state.py:1754] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank N/A, EPLB rank N/A
+(Worker pid=15803) INFO 06-09 09:49:28 [cpu_model_runner.py:102] Synthetic dummy execution enabled; skipping CPU model load.
+(Worker pid=15803) INFO 06-09 09:49:28 [cpu_worker.py:231] Synthetic dummy execution enabled; skipping CPU model warmup.
+(EngineCore pid=15756) INFO 06-09 09:49:28 [core.py:313] init engine (profile, create kv cache, warmup model) took 0.05 s
+(EngineCore pid=15756) INFO 06-09 09:49:33 [vllm.py:999] Asynchronous scheduling is disabled.
+(EngineCore pid=15756) WARNING 06-09 09:49:33 [vllm.py:1055] Enforce eager set, disabling torch.compile and CUDAGraphs. This is equivalent to setting -cc.mode=none -cc.cudagraph_mode=none
+(EngineCore pid=15756) WARNING 06-09 09:49:33 [vllm.py:1097] Inductor compilation was disabled by user settings, optimizations settings that are only active during inductor compilation will be ignored.
+(EngineCore pid=15756) INFO 06-09 09:49:33 [kernel.py:270] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+(EngineCore pid=15756) INFO 06-09 09:49:33 [compilation.py:321] Enabled custom fusions: norm_quant, act_quant
+Warming up...
+(EngineCore pid=15756) INFO 06-09 09:49:37 [core.py:1289] Shutdown initiated (timeout=0)
+(EngineCore pid=15756) INFO 06-09 09:49:37 [core.py:1312] Shutdown complete
+(Worker pid=15803) INFO 06-09 09:49:37 [multiproc_executor.py:770] Parent process exited, terminating worker queues
+(Worker pid=15803) INFO 06-09 09:49:37 [multiproc_executor.py:870] WorkerProc shutting down.
+Avg latency: 3.5216198230045848 seconds
+10% percentile latency: 3.5216198230045848 seconds
+25% percentile latency: 3.5216198230045848 seconds
+50% percentile latency: 3.5216198230045848 seconds
+75% percentile latency: 3.5216198230045848 seconds
+90% percentile latency: 3.5216198230045848 seconds
+99% percentile latency: 3.5216198230045848 seconds
+Dummy GPU execution: enabled
+Dummy delays: prefill=5.0 ms, decode=1.0 ms, token=0
+ttft_ms: count=1 avg=11.527075 p50=11.527075 p90=11.527075 p99=11.527075
+prefill_latency_ms: count=1 avg=11.527075 p50=11.527075 p90=11.527075 p99=11.527075
+prefill_chunk_latency_ms: count=0 avg=0.000000 p50=0.000000 p90=0.000000 p99=0.000000
+decode_latency_ms: count=511 avg=3.983685 p50=3.978026 p90=4.046026 p99=4.229827
+total_step_latency_ms: count=512 avg=3.998419 p50=3.978525 p90=4.046027 p99=4.232917
+TPOT: 3.983685 ms/token
+Decoding TPS: 251.023843 tokens/s
+
+STDERR:
+Error in cpuinfo: processor architecture is not supported in cpuinfo
+Error in cpuinfo: processor architecture is not supported in cpuinfo
+Error in cpuinfo: processor architecture is not supported in cpuinfo
+[W609 09:49:28.464946088 utils.cpp:68] Warning: NUMA binding: Using MEMBIND policy for memory allocation on the NUMA nodes (0). Memory allocations will be strictly bound to these NUMA nodes. (function init_cpu_memory_env)
+Error in cpuinfo: processor architecture is not supported in cpuinfo
+
+Warmup iterations: 0it [00:00, ?it/s]
+Warmup iterations: 0it [00:00, ?it/s]
+
+Bench iterations:   0%|          | 0/1 [00:00<?, ?it/s]
+Bench iterations: 100%|██████████| 1/1 [00:03<00:00,  3.52s/it]
+Bench iterations: 100%|██████████| 1/1 [00:03<00:00,  3.52s/it]

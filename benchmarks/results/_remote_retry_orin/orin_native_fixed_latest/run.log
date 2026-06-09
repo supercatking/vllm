@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/usr/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/nvidia/vllm_synthetic_host_benchmark/orin_20260609_083900/src/vllm/vllm/entrypoints/cli/main.py", line 115, in <module>
+    main()
+  File "/home/nvidia/vllm_synthetic_host_benchmark/orin_20260609_083900/src/vllm/vllm/entrypoints/cli/main.py", line 18, in main
+    from vllm.entrypoints.utils import VLLM_SUBCMD_PARSER_EPILOG, cli_env_setup
+ModuleNotFoundError: No module named 'vllm.entrypoints.utils'

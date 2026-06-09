@@ -1,0 +1,68 @@
+{
+  "generated_at_unix": 1780970857.963293,
+  "benchmark": "vLLM synthetic host scheduler four-platform run",
+  "completed_platforms": [
+    {
+      "platform": "local_wsl_amd9950x3d",
+      "path": "benchmarks/results/synthetic_host_scheduler_20260609-000821/local_wsl/matrix_results.json",
+      "hostname": "amd9950",
+      "machine": "x86_64",
+      "kernel": "Linux amd9950 6.6.87.2-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Thu Jun  5 18:30:46 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux",
+      "case_count": 12,
+      "success_count": 12,
+      "avg_ttft_ms": 5.4544128812267445,
+      "avg_tpot_ms": 1.2830236990174337,
+      "avg_decode_tps": 779.4467668942451,
+      "avg_host_adjusted_e2e_ms": 32.794103208289016,
+      "ttft_range_ms": [
+        5.4196069948375225,
+        5.502935597905889
+      ],
+      "tpot_range_ms": [
+        1.2703515425701404,
+        1.2960779675585588
+      ],
+      "decode_tps_range": [
+        771.5585211927604,
+        787.1836782886314
+      ]
+    },
+    {
+      "platform": "dude_riscv64_native",
+      "path": "benchmarks/results/_remote_retry_dude/dude_native_matrix_20260609_093542/matrix_results.json",
+      "hostname": "rockos-eswin",
+      "machine": "riscv64",
+      "kernel": "Linux rockos-eswin 6.6.92-eic7702-2025.08 #2025.09.10.11.31+ SMP Wed Sep 10 11:33:20 UTC 2025 riscv64 GNU/Linux",
+      "case_count": 12,
+      "success_count": 12,
+      "avg_ttft_ms": 11.983244330622256,
+      "avg_tpot_ms": 4.1080175825799605,
+      "avg_decode_tps": 243.6091653248269,
+      "avg_host_adjusted_e2e_ms": 777.8394432352798,
+      "ttft_range_ms": [
+        11.429072997998446,
+        13.008089998038486
+      ],
+      "tpot_range_ms": [
+        3.9516762056062738,
+        4.310769819233779
+      ],
+      "decode_tps_range": [
+        231.97712750474477,
+        253.05717067134503
+      ]
+    }
+  ],
+  "blocked_platforms": {
+    "peter_riscv64": {
+      "status": "blocked",
+      "reason": "SSH unavailable during 10-minute retry window after reboot; no remote files modified.",
+      "artifact": "benchmarks/results/_remote_retry_peter/blocker_ssh_unavailable_20260609_095412.log"
+    },
+    "orin_jetson_aarch64": {
+      "status": "blocked",
+      "reason": "Current Orin environment has no complete vLLM install; Jetson PyTorch 2.5.0a0+nv24.08 lacks torch._C._distributed_c10d, which blocks this vLLM branch before benchmark execution.",
+      "artifact": "benchmarks/results/_remote_retry_orin/orin_native_fixed_latest/"
+    }
+  }
+}

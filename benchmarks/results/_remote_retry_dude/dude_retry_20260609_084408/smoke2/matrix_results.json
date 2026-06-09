@@ -1,0 +1,82 @@
+{
+  "benchmark": "vllm_synthetic_host_scheduler",
+  "version": 1,
+  "generated_at_unix": 1780966347.6848435,
+  "environment": {
+    "platform": "Linux-6.6.92-eic7702-2025.08-riscv64-with-glibc2.40",
+    "machine": "riscv64",
+    "processor": "",
+    "python": "3.12.6 (main, Sep  7 2024, 14:20:15) [GCC 14.2.0]",
+    "hostname": "rockos-eswin",
+    "vllm_commit": "fatal: not a git repository (or any of the parent directories): .git",
+    "vllm_branch": "fatal: not a git repository (or any of the parent directories): .git",
+    "kernel": "Linux rockos-eswin 6.6.92-eic7702-2025.08 #2025.09.10.11.31+ SMP Wed Sep 10 11:33:20 UTC 2025 riscv64 GNU/Linux",
+    "cpu": "Architecture:        riscv64\nByte Order:          Little Endian\nCPU(s):              8\nOn-line CPU(s) list: 0-7\nVendor ID:           0x489\nModel name:          eswin,eic770x\nCPU family:          0x8000000000000008\nModel:               0x6220425\nThread(s) per core:  1\nCore(s) per socket:  8\nSocket(s):           1\nCPU(s) scaling MHz:  100%\nCPU max MHz:         1800.0000\nCPU min MHz:         700.0000\nL1d cache:           256 KiB (8 instances)\nL1i cache:           256 KiB (8 instances)\nL2 cache:            2 MiB (8 instances)\nL3 cache:            8 MiB (2 instances)\nNUMA node(s):        2\nNUMA node0 CPU(s):   0-3\nNUMA node1 CPU(s):   4-7",
+    "nvidia_smi": "bash: line 1: nvidia-smi: command not found",
+    "taskset": "pid 11603's current affinity list: 0-7"
+  },
+  "config": {
+    "subparser": "bench",
+    "bench_type": "synthetic",
+    "model": "/home/eswin/vllm/.p550_models/qwen2.5-0.5b-instruct",
+    "model_profile": null,
+    "synthetic_backend": "sleep",
+    "input_lens": "32",
+    "output_lens": "3",
+    "batch_size": 1,
+    "concurrency": 1,
+    "repeats": 1,
+    "warmup": 1,
+    "dummy_prefill_ms": 5.0,
+    "dummy_decode_ms": 1.0,
+    "dummy_output_token_id": 0,
+    "gpu_memory_utilization": 0.5,
+    "max_model_len": 128,
+    "output_dir": "/home/eswin/vllm_synthetic_host_benchmark/dude_retry_20260609_084408/smoke2",
+    "output_json": null,
+    "output_csv": null,
+    "output_md": null,
+    "reference_json": null
+  },
+  "score": {
+    "available": false,
+    "reason": "no reference-json provided"
+  },
+  "cases": [
+    {
+      "case_id": "i32_o3",
+      "input_tokens_target": 32,
+      "output_tokens_target": 3,
+      "batch_size": 1,
+      "concurrency": 1,
+      "synthetic_backend": "sleep",
+      "dummy_prefill_ms": 5.0,
+      "dummy_decode_ms": 1.0,
+      "dummy_output_token_id": 0,
+      "success": false,
+      "invalid_reason": "latency command exited 1",
+      "raw_json": "/home/eswin/vllm_synthetic_host_benchmark/dude_retry_20260609_084408/smoke2/raw_logs/synthetic_i32_o3.json",
+      "wall_time_s": 170.23420751700178,
+      "stdout_tail": "\", line 598, in __init__\nERROR 06-09 08:52:16 [multiproc_executor.py:868]     wrapper.init_worker(all_kwargs)\nERROR 06-09 08:52:16 [multiproc_executor.py:868]   File \"/home/eswin/vllm_synthetic_host_benchmark/dude_retry_20260609_084408/source/vllm/v1/worker/worker_base.py\", line 313, in init_worker\nERROR 06-09 08:52:16 [multiproc_executor.py:868]     self.worker = worker_class(**kwargs)\nERROR 06-09 08:52:16 [multiproc_executor.py:868]                   ^^^^^^^^^^^^^^^^^^^^^^\nERROR 06-09 08:52:16 [multiproc_executor.py:868]   File \"/home/eswin/vllm_synthetic_host_benchmark/dude_retry_20260609_084408/source/vllm/v1/worker/cpu_worker.py\", line 71, in __init__\nERROR 06-09 08:52:16 [multiproc_executor.py:868]     raise ValueError(\nERROR 06-09 08:52:16 [multiproc_executor.py:868] ValueError: Available memory on node 0 (0.98/9.66 GiB) on startup is less than desired CPU memory utilization (0.5, 4.83 GiB). On the CPU backend, the `--gpu-memory-utilization` flag controls the fraction of CPU memory reserved (despite its name). To resolve: decrease `--gpu-memory-utilization` (e.g. `--gpu-memory-utilization 0.5`) or reduce CPU memory used by other processes.\n(EngineCore pid=11622) ERROR 06-09 08:52:20 [core.py:1188] EngineCore failed to start.\n(EngineCore pid=11622) ERROR 06-09 08:52:20 [core.py:1188] Traceback (most recent call last):\n(EngineCore pid=11622) ERROR 06-09 08:52:20 [core.py:1188]   File \"/home/eswin/vllm_synthetic_host_benchmark/dude_retry_20260609_084408/source/vllm/v1/engine/core.py\", line 1162, in run_engine_core\n(EngineCore pid=11622) ERROR 06-09 08:52:20 [core.py:1188]     engine_core = EngineCoreProc(*args, engine_index=dp_rank, **kwargs)\n(EngineCore pid=11622) ERROR 06-09 08:52:20 [core.py:1188]                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n(EngineCore pid=11622) ERROR 06-09 08:52:20 [core.py:1188]   File \"/home/eswin/vllm_synthetic_host_benchmark/dude_retry_20260609_084408/source/vllm/v1/engine/core.py\", line 928, in __init__\n(EngineCore pid=11622) ERROR 06-09 08:52:20 [core.py:1188]     super().__init__(\n(EngineCore pid=11622) ERROR 06-09 08:52:20 [core.py:1188]   File \"/home/eswin/vllm_synthetic_host_benchmark/dude_retry_20260609_084408/source/vllm/v1/engine/core.py\", line 122, in __init__\n(EngineCore pid=11622) ERROR 06-09 08:52:20 [core.py:1188]     self.model_executor = executor_class(vllm_config)\n(EngineCore pid=11622) ERROR 06-09 08:52:20 [core.py:1188]                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n(EngineCore pid=11622) ERROR 06-09 08:52:20 [core.py:1188]   File \"/home/eswin/vllm_synthetic_host_benchmark/dude_retry_20260609_084408/source/vllm/v1/executor/multiproc_executor.py\", line 108, in __init__\n(EngineCore pid=11622) ERROR 06-09 08:52:20 [core.py:1188]     super().__init__(vllm_config)\n(EngineCore pid=11622) ERROR 06-09 08:52:20 [core.py:1188]   File \"/home/eswin/vllm_synthetic_host_benchmark/dude_retry_20260609_084408/source/vllm/v1/executor/abstract.py\", line 109, in __init__\n(EngineCore pid=11622) ERROR 06-09 08:52:20 [core.py:1188]     self._init_executor()\n(EngineCore pid=11622) ERROR 06-09 08:52:20 [core.py:1188]   File \"/home/eswin/vllm_synthetic_host_benchmark/dude_retry_20260609_084408/source/vllm/v1/executor/multiproc_executor.py\", line 201, in _init_executor\n(EngineCore pid=11622) ERROR 06-09 08:52:20 [core.py:1188]     self.workers = WorkerProc.wait_for_ready(unready_workers)\n(EngineCore pid=11622) ERROR 06-09 08:52:20 [core.py:1188]                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n(EngineCore pid=11622) ERROR 06-09 08:52:20 [core.py:1188]   File \"/home/eswin/vllm_synthetic_host_benchmark/dude_retry_20260609_084408/source/vllm/v1/executor/multiproc_executor.py\", line 742, in wait_for_ready\n(EngineCore pid=11622) ERROR 06-09 08:52:20 [core.py:1188]     raise e from None\n(EngineCore pid=11622) ERROR 06-09 08:52:20 [core.py:1188] Exception: WorkerProc initialization failed due to an exception in a background process. See stack trace for root cause.\n",
+      "stderr_tail": "       ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n(EngineCore pid=11622)   File \"/home/eswin/vllm_synthetic_host_benchmark/dude_retry_20260609_084408/source/vllm/v1/executor/multiproc_executor.py\", line 108, in __init__\n(EngineCore pid=11622)     super().__init__(vllm_config)\n(EngineCore pid=11622)   File \"/home/eswin/vllm_synthetic_host_benchmark/dude_retry_20260609_084408/source/vllm/v1/executor/abstract.py\", line 109, in __init__\n(EngineCore pid=11622)     self._init_executor()\n(EngineCore pid=11622)   File \"/home/eswin/vllm_synthetic_host_benchmark/dude_retry_20260609_084408/source/vllm/v1/executor/multiproc_executor.py\", line 201, in _init_executor\n(EngineCore pid=11622)     self.workers = WorkerProc.wait_for_ready(unready_workers)\n(EngineCore pid=11622)                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n(EngineCore pid=11622)   File \"/home/eswin/vllm_synthetic_host_benchmark/dude_retry_20260609_084408/source/vllm/v1/executor/multiproc_executor.py\", line 742, in wait_for_ready\n(EngineCore pid=11622)     raise e from None\n(EngineCore pid=11622) Exception: WorkerProc initialization failed due to an exception in a background process. See stack trace for root cause.\nTraceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/home/eswin/vllm_synthetic_host_benchmark/dude_retry_20260609_084408/source/vllm/entrypoints/cli/main.py\", line 115, in <module>\n    main()\n  File \"/home/eswin/vllm_synthetic_host_benchmark/dude_retry_20260609_084408/source/vllm/entrypoints/cli/main.py\", line 109, in main\n    args.dispatch_function(args)\n  File \"/home/eswin/vllm_synthetic_host_benchmark/dude_retry_20260609_084408/source/vllm/entrypoints/cli/benchmark/latency.py\", line 21, in cmd\n    main(args)\n  File \"/home/eswin/vllm_synthetic_host_benchmark/dude_retry_20260609_084408/source/vllm/benchmarks/latency.py\", line 284, in main\n    llm = LLM.from_engine_args(engine_args)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/eswin/vllm_synthetic_host_benchmark/dude_retry_20260609_084408/source/vllm/entrypoints/llm.py\", line 389, in from_engine_args\n    return cls(**vars(engine_args))\n           ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/eswin/vllm_synthetic_host_benchmark/dude_retry_20260609_084408/source/vllm/entrypoints/llm.py\", line 349, in __init__\n    self.llm_engine = LLMEngine.from_engine_args(\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/eswin/vllm_synthetic_host_benchmark/dude_retry_20260609_084408/source/vllm/v1/engine/llm_engine.py\", line 170, in from_engine_args\n    return cls(\n           ^^^^\n  File \"/home/eswin/vllm_synthetic_host_benchmark/dude_retry_20260609_084408/source/vllm/v1/engine/llm_engine.py\", line 104, in __init__\n    self.engine_core = EngineCoreClient.make_client(\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/eswin/vllm_synthetic_host_benchmark/dude_retry_20260609_084408/source/vllm/v1/engine/core_client.py\", line 102, in make_client\n    return SyncMPClient(vllm_config, executor_class, log_stats)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/eswin/vllm_synthetic_host_benchmark/dude_retry_20260609_084408/source/vllm/v1/engine/core_client.py\", line 759, in __init__\n    super().__init__(\n  File \"/home/eswin/vllm_synthetic_host_benchmark/dude_retry_20260609_084408/source/vllm/v1/engine/core_client.py\", line 567, in __init__\n    with launch_core_engines(\n  File \"/usr/lib/python3.12/contextlib.py\", line 144, in __exit__\n    next(self.gen)\n  File \"/home/eswin/vllm_synthetic_host_benchmark/dude_retry_20260609_084408/source/vllm/v1/engine/utils.py\", line 1155, in launch_core_engines\n    wait_for_engine_startup(\n  File \"/home/eswin/vllm_synthetic_host_benchmark/dude_retry_20260609_084408/source/vllm/v1/engine/utils.py\", line 1214, in wait_for_engine_startup\n    raise RuntimeError(\nRuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}\n"
+    }
+  ],
+  "summary": {
+    "success_count": 0,
+    "failure_count": 1,
+    "host_adjusted_e2e_ms": {
+      "count": 0,
+      "avg": 0.0,
+      "p50": 0.0,
+      "p90": 0.0,
+      "p99": 0.0
+    },
+    "tpot_ms": {
+      "count": 0,
+      "avg": 0.0,
+      "p50": 0.0,
+      "p90": 0.0,
+      "p99": 0.0
+    }
+  }
+}

@@ -30,6 +30,27 @@ The command writes:
 - `analysis.md`
 - `raw_logs/` with one raw latency JSON and log per matrix cell
 
+
+## CPU-Only Remote Hosts
+
+The benchmark can also run on CPU-only development boards when the goal is to measure the host scheduler path rather than real CPU model execution. In that mode, set the normal V1 CPU target variables and let `vllm bench synthetic` enable `BENCH_DUMMY_GPU_EXECUTION` for child latency runs:
+
+```bash
+VLLM_USE_V1=1 \
+VLLM_TARGET_DEVICE=cpu \
+VLLM_WORKER_MULTIPROC_METHOD=fork \
+vllm bench synthetic \
+  --model /path/to/local/model \
+  --gpu-memory-utilization 0.05 \
+  --input-lens 32,128,512,1024 \
+  --output-lens 64,128,512 \
+  --warmup 0 \
+  --repeats 1 \
+  --output-dir /tmp/vllm_synthetic_cpu_host
+```
+
+When `BENCH_DUMMY_GPU_EXECUTION=1` is active, the CPU worker uses a minimal KV cache reservation, skips CPU model loading and warmup, and reports generation support without touching real model weights. This keeps the result separate from existing CPU backend deployments such as a real Qwen 0.5B CPU inference service.
+
 ## Metrics
 
 - `avg_e2e_ms`: raw end-to-end latency from the wrapped latency benchmark.

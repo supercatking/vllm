@@ -1,0 +1,77 @@
+
+try:
+    import inspect
+    import types
+    import typing
+    import torch
+
+    def _schema_type(annotation):
+        if annotation is inspect.Signature.empty:
+            return 'Tensor'
+        origin = typing.get_origin(annotation)
+        args = typing.get_args(annotation)
+        if annotation is None or annotation is type(None):
+            return 'None'
+        if annotation is torch.Tensor or getattr(annotation, '__name__', None) == 'Tensor':
+            return 'Tensor'
+        if annotation is int:
+            return 'int'
+        if annotation is float:
+            return 'float'
+        if annotation is bool:
+            return 'bool'
+        if annotation is str:
+            return 'str'
+        if origin in (list, typing.List):
+            return f'{_schema_type(args[0])}[]' if args else 'Tensor[]'
+        if origin in (tuple, typing.Tuple):
+            return f'{_schema_type(args[0])}[]' if len(args) == 2 and args[1] is Ellipsis else '(' + ', '.join(_schema_type(a) for a in args) + ')'
+        if origin is typing.Union or origin is getattr(types, 'UnionType', None):
+            non_none = [a for a in args if a is not type(None)]
+            return (_schema_type(non_none[0]) if non_none else 'Tensor') + '?'
+        text = str(annotation).replace('typing.', '')
+        if 'Tensor' in text:
+            return 'Tensor'
+        if 'int' in text:
+            return 'int'
+        if 'float' in text:
+            return 'float'
+        if 'bool' in text:
+            return 'bool'
+        if 'str' in text:
+            return 'str'
+        return 'Tensor'
+
+    def infer_schema(prototype_function, *, mutates_args):
+        sig = inspect.signature(prototype_function)
+        params = []
+        for name, param in sig.parameters.items():
+            if name in ('self', 'cls'):
+                continue
+            default = '' if param.default is inspect.Signature.empty else f'={param.default!r}'.replace('None', 'None')
+            params.append(f'{_schema_type(param.annotation)} {name}{default}')
+        ret = sig.return_annotation
+        ret_s = '()' if ret is inspect.Signature.empty or ret is None else _schema_type(ret)
+        return f'{prototype_function.__name__}({", ".join(params)}) -> {ret_s}'
+
+    if not hasattr(torch.library, 'infer_schema'):
+        torch.library.infer_schema = infer_schema
+except Exception as exc:
+    print('sitecustomize infer_schema shim failed:', repr(exc))
+
+try:
+    import sys
+    import types
+    import torch._inductor as _inductor
+    if 'torch._inductor.custom_graph_pass' not in sys.modules:
+        mod = types.ModuleType('torch._inductor.custom_graph_pass')
+        class CustomGraphPass:
+            def __call__(self, graph):
+                return self.apply(graph) if hasattr(self, 'apply') else None
+            def uuid(self):
+                return self.__class__.__qualname__
+        mod.CustomGraphPass = CustomGraphPass
+        sys.modules['torch._inductor.custom_graph_pass'] = mod
+        setattr(_inductor, 'custom_graph_pass', mod)
+except Exception as exc:
+    print('sitecustomize custom_graph_pass shim failed:', repr(exc))
