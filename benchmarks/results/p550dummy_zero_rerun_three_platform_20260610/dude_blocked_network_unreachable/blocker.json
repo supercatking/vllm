@@ -1,0 +1,32 @@
+{
+  "platform": "dude",
+  "status": "blocked",
+  "created_at_unix": 1781054897.961571,
+  "ssh_alias": "dude",
+  "host": "192.168.1.57",
+  "user": "eswin",
+  "reason": "Network/SSH unreachable from both WSL and Windows; benchmark was not started.",
+  "checks": [
+    {
+      "source": "WSL ssh dude",
+      "result": "No route to host"
+    },
+    {
+      "source": "WSL ping 192.168.1.57",
+      "result": "100% packet loss / Destination Host Unreachable"
+    },
+    {
+      "source": "WSL nc 192.168.1.57 22",
+      "result": "No route to host or timeout"
+    },
+    {
+      "source": "Windows Test-NetConnection 192.168.1.57 -Port 22",
+      "result": "DestinationHostUnreachable, as reported by dude worker agent"
+    }
+  ],
+  "valid_benchmark_score": null,
+  "success_count_by_round": {
+    "round1": "0/12 not started",
+    "round2": "0/12 not started"
+  }
+}

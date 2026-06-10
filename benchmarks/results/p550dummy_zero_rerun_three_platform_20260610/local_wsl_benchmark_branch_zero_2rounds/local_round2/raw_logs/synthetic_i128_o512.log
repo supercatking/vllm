@@ -1,0 +1,72 @@
+$ /home/zyz/vLLM_deploy/.venv/bin/python -m vllm.entrypoints.cli.main bench latency --model /home/zyz/vLLM_deploy/localModels/models--Qwen--Qwen2.5-0.5B-Instruct/snapshots/7ae557604adf67be50417f59c2c2f167def9a775 --load-format dummy --enforce-eager --input-len 128 --output-len 512 --batch-size 1 --gpu-memory-utilization 0.5 --num-iters-warmup 1 --num-iters 5 --dummy-gpu-execution --dummy-prefill-delay-ms 0.0 --dummy-decode-delay-ms 0.0 --dummy-token-id 0 --output-json benchmarks/results/p550dummy_compare_local_benchmark_zero_2rounds_20260610-085322/local_round2/raw_logs/synthetic_i128_o512.json --max-model-len 2048
+
+STDOUT:
+INFO 06-10 08:58:07 [utils.py:278] non-default args: {'load_format': 'dummy', 'max_model_len': 2048, 'enable_prefix_caching': False, 'gpu_memory_utilization': 0.5, 'enforce_eager': True, 'enable_lora': None, 'reasoning_parser_plugin': '', 'async_scheduling': False, 'model': '/home/zyz/vLLM_deploy/localModels/models--Qwen--Qwen2.5-0.5B-Instruct/snapshots/7ae557604adf67be50417f59c2c2f167def9a775'}
+WARNING 06-10 08:58:07 [envs.py:1966] Unknown vLLM environment variable detected: VLLM_USE_V1
+INFO 06-10 08:58:07 [model.py:607] Resolved architecture: Qwen2ForCausalLM
+INFO 06-10 08:58:07 [model.py:1742] Using max model len 2048
+INFO 06-10 08:58:07 [scheduler.py:239] Chunked prefill is enabled with max_num_batched_tokens=8192.
+INFO 06-10 08:58:07 [vllm.py:965] Asynchronous scheduling is disabled.
+WARNING 06-10 08:58:07 [vllm.py:1021] Enforce eager set, disabling torch.compile and CUDAGraphs. This is equivalent to setting -cc.mode=none -cc.cudagraph_mode=none
+WARNING 06-10 08:58:07 [vllm.py:1046] Inductor compilation was disabled by user settings, optimizations settings that are only active during inductor compilation will be ignored.
+INFO 06-10 08:58:07 [kernel.py:270] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native'])
+INFO 06-10 08:58:07 [vllm.py:1222] Cudagraph is disabled under eager mode
+INFO 06-10 08:58:07 [compilation.py:312] Enabled custom fusions: norm_quant, act_quant
+WARNING 06-10 08:58:08 [system_utils.py:157] We must use the `spawn` multiprocessing start method. Overriding VLLM_WORKER_MULTIPROC_METHOD to 'spawn'. See https://docs.vllm.ai/en/latest/usage/troubleshooting.html#python-multiprocessing for more information. Reasons: WSL is detected and NVML is not compatible with fork
+(EngineCore pid=460699) INFO 06-10 08:58:11 [core.py:109] Initializing a V1 LLM engine (v0.1.dev16834+gb730c4635.d20260521) with config: model='/home/zyz/vLLM_deploy/localModels/models--Qwen--Qwen2.5-0.5B-Instruct/snapshots/7ae557604adf67be50417f59c2c2f167def9a775', speculative_config=None, tokenizer='/home/zyz/vLLM_deploy/localModels/models--Qwen--Qwen2.5-0.5B-Instruct/snapshots/7ae557604adf67be50417f59c2c2f167def9a775', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=2048, download_dir=None, load_format=dummy, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=False, quantization=None, quantization_config=None, enforce_eager=True, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False), seed=0, served_model_name=/home/zyz/vLLM_deploy/localModels/models--Qwen--Qwen2.5-0.5B-Instruct/snapshots/7ae557604adf67be50417f59c2c2f167def9a775, enable_prefix_caching=False, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.NONE: 0>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['all'], 'ir_enable_torch_wrap': False, 'splitting_ops': [], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_vision_items_per_batch': 0, 'encoder_cudagraph_max_frames_per_batch': None, 'compile_sizes': [], 'compile_ranges_endpoints': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'size_asserts': False, 'alignment_asserts': False, 'scalar_asserts': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.NONE: 0>, 'cudagraph_num_of_warmups': 0, 'cudagraph_capture_sizes': [], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': True, 'fuse_act_quant': True, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False, 'fuse_rope_kvcache_cat_mla': False, 'fuse_act_padding': False}, 'max_cudagraph_capture_size': 0, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': False, 'static_all_moe_layers': []}, kernel_config=KernelConfig(ir_op_priority=IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native']), enable_flashinfer_autotune=True, moe_backend='auto', linear_backend='auto')
+(EngineCore pid=460699) WARNING 06-10 08:58:12 [interface.py:729] Using 'pin_memory=False' as WSL is detected. This may slow down the performance.
+(EngineCore pid=460699) INFO 06-10 08:58:12 [parallel_state.py:1416] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://172.21.169.19:45563 backend=nccl
+(EngineCore pid=460699) INFO 06-10 08:58:12 [parallel_state.py:1729] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank N/A, EPLB rank N/A
+(EngineCore pid=460699) INFO 06-10 08:58:13 [topk_topp_sampler.py:45] Using FlashInfer for top-p & top-k sampling.
+(EngineCore pid=460699) INFO 06-10 08:58:13 [gpu_model_runner.py:5239] Starting to load model /home/zyz/vLLM_deploy/localModels/models--Qwen--Qwen2.5-0.5B-Instruct/snapshots/7ae557604adf67be50417f59c2c2f167def9a775...
+(EngineCore pid=460699) INFO 06-10 08:58:13 [cuda.py:378] Using FLASH_ATTN attention backend out of potential backends: ['FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION'].
+(EngineCore pid=460699) INFO 06-10 08:58:13 [flash_attn.py:636] Using FlashAttention version 2
+(EngineCore pid=460699) INFO 06-10 08:58:14 [gpu_model_runner.py:5334] Model loading took 0.93 GiB memory and 0.190786 seconds
+(EngineCore pid=460699) INFO 06-10 08:58:15 [gpu_worker.py:462] Available KV cache memory: 6.37 GiB
+(EngineCore pid=460699) INFO 06-10 08:58:15 [kv_cache_utils.py:1733] GPU KV cache size: 556,912 tokens
+(EngineCore pid=460699) INFO 06-10 08:58:15 [kv_cache_utils.py:1734] Maximum concurrency for 2,048 tokens per request: 271.93x
+(EngineCore pid=460699) INFO 06-10 08:58:15 [jit_monitor.py:54] Kernel JIT monitor activated — Triton JIT compilations during inference will be logged as warnings.
+(EngineCore pid=460699) INFO 06-10 08:58:15 [core.py:306] init engine (profile, create kv cache, warmup model) took 1.43 s
+(EngineCore pid=460699) INFO 06-10 08:58:16 [vllm.py:965] Asynchronous scheduling is disabled.
+(EngineCore pid=460699) WARNING 06-10 08:58:16 [vllm.py:1021] Enforce eager set, disabling torch.compile and CUDAGraphs. This is equivalent to setting -cc.mode=none -cc.cudagraph_mode=none
+(EngineCore pid=460699) WARNING 06-10 08:58:16 [vllm.py:1046] Inductor compilation was disabled by user settings, optimizations settings that are only active during inductor compilation will be ignored.
+WARNING 06-10 08:58:16 [interface.py:729] Using 'pin_memory=False' as WSL is detected. This may slow down the performance.
+(EngineCore pid=460699) INFO 06-10 08:58:16 [kernel.py:270] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native'])
+(EngineCore pid=460699) INFO 06-10 08:58:16 [vllm.py:1222] Cudagraph is disabled under eager mode
+(EngineCore pid=460699) INFO 06-10 08:58:16 [compilation.py:312] Enabled custom fusions: norm_quant, act_quant
+Warming up...
+(EngineCore pid=460699) INFO 06-10 08:58:17 [core.py:1261] Shutdown initiated (timeout=0)
+(EngineCore pid=460699) INFO 06-10 08:58:17 [core.py:1284] Shutdown complete
+Avg latency: 0.19118241320829837 seconds
+10% percentile latency: 0.1877839766209945 seconds
+25% percentile latency: 0.18834753800183535 seconds
+50% percentile latency: 0.19139566499507055 seconds
+75% percentile latency: 0.1933478339924477 seconds
+90% percentile latency: 0.19458678960800171 seconds
+99% percentile latency: 0.1953301629773341 seconds
+Dummy GPU execution: enabled
+Dummy delays: prefill=0.0 ms, decode=0.0 ms, token=0
+ttft_ms: count=5 avg=0.337336 p50=0.334418 p90=0.348025 p99=0.350384
+prefill_latency_ms: count=5 avg=0.337336 p50=0.334418 p90=0.348025 p99=0.350384
+prefill_chunk_latency_ms: count=0 avg=0.000000 p50=0.000000 p90=0.000000 p99=0.000000
+decode_latency_ms: count=2555 avg=0.249817 p50=0.234649 p90=0.281889 p99=0.428250
+total_step_latency_ms: count=2560 avg=0.249988 p50=0.234710 p90=0.283123 p99=0.428227
+TPOT: 0.249817 ms/token
+Decoding TPS: 4002.929208 tokens/s
+
+STDERR:
+(EngineCore pid=460699) 2026-06-10 08:58:15,778 - INFO - autotuner.py:615 - flashinfer.jit: [Autotuner]: Autotuning process starts ...
+(EngineCore pid=460699) 2026-06-10 08:58:15,802 - INFO - autotuner.py:634 - flashinfer.jit: [Autotuner]: Autotuning process ends
+
+Warmup iterations:   0%|          | 0/1 [00:00<?, ?it/s]
+Warmup iterations: 100%|██████████| 1/1 [00:00<00:00,  5.11it/s]
+Warmup iterations: 100%|██████████| 1/1 [00:00<00:00,  5.10it/s]
+
+Bench iterations:   0%|          | 0/5 [00:00<?, ?it/s]
+Bench iterations:  20%|██        | 1/5 [00:00<00:00,  5.12it/s]
+Bench iterations:  40%|████      | 2/5 [00:00<00:00,  5.15it/s]
+Bench iterations:  60%|██████    | 3/5 [00:00<00:00,  5.23it/s]
+Bench iterations:  80%|████████  | 4/5 [00:00<00:00,  5.26it/s]
+Bench iterations: 100%|██████████| 5/5 [00:00<00:00,  5.25it/s]
+Bench iterations: 100%|██████████| 5/5 [00:00<00:00,  5.23it/s]
+[rank0]:[W610 08:58:18.651263289 ProcessGroupNCCL.cpp:1575] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())

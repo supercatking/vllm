@@ -1,0 +1,395 @@
+{
+  "created_at_unix": 1781057317.9871807,
+  "benchmark": "p550dummy zero-delay synthetic host scheduler rerun",
+  "dummy_prefill_ms": 0.0,
+  "dummy_decode_ms": 0.0,
+  "dummy_token_id": 0,
+  "platforms": {
+    "local_wsl": {
+      "label": "Local WSL AMD 9950X3D / benchmark branch synthetic path",
+      "note": "Ran from benchmark branch because p550dummy/p550dev is RISC-V CPU-targeted and fails on local WSL GPU/flash-attn imports. Same synthetic dummy latency implementation/schema.",
+      "rounds": [
+        {
+          "round": 1,
+          "path": "/home/zyz/vLLM_deploy/vllm_p550dummy/benchmarks/results/p550dummy_zero_rerun_three_platform_20260610/local_wsl_benchmark_branch_zero_2rounds/local_round1/matrix_results.json",
+          "success_count": 12,
+          "total_cases": 12,
+          "avg_ttft_ms": 0.3586583149929841,
+          "avg_prefill_ms": 0.3586583149929841,
+          "avg_tpot_ms": 0.24979730768911024,
+          "geomean_decode_tps": 4004.4398532711602,
+          "avg_e2e_ms": 87.64608333294746,
+          "avg_host_adjusted_e2e_ms": 29.387420244165696
+        },
+        {
+          "round": 2,
+          "path": "/home/zyz/vLLM_deploy/vllm_p550dummy/benchmarks/results/p550dummy_zero_rerun_three_platform_20260610/local_wsl_benchmark_branch_zero_2rounds/local_round2/matrix_results.json",
+          "success_count": 12,
+          "total_cases": 12,
+          "avg_ttft_ms": 0.36661493068095297,
+          "avg_prefill_ms": 0.36661493068095297,
+          "avg_tpot_ms": 0.2511850045617472,
+          "geomean_decode_tps": 3981.8236663395687,
+          "avg_e2e_ms": 88.50170180376153,
+          "avg_host_adjusted_e2e_ms": 29.665547676268034
+        }
+      ],
+      "validation_failures": [],
+      "combined": {
+        "success_count": 24,
+        "total_cases": 24,
+        "avg_ttft_ms": 0.3626366228369685,
+        "stdev_round_avg_ttft_ms": 0.00562617690825804,
+        "avg_prefill_ms": 0.3626366228369685,
+        "avg_tpot_ms": 0.2504911561254287,
+        "stdev_round_avg_tpot_ms": 0.0009812498688729567,
+        "geomean_decode_tps": 3993.115748158126,
+        "avg_e2e_ms": 88.0738925683545,
+        "avg_host_adjusted_e2e_ms": 29.526483960216865
+      },
+      "cases": {
+        "i32_o64": {
+          "input_tokens": 32,
+          "output_tokens": 64,
+          "round_count": 2,
+          "avg_ttft_ms": 0.36647600354626775,
+          "avg_prefill_ms": 0.36647600354626775,
+          "prefill_per_input_token_us": 11.452375110820867,
+          "avg_tpot_ms": 0.24732021043919739,
+          "geomean_decode_tps": 4043.3980407726476,
+          "avg_e2e_ms": 24.728714191587642
+        },
+        "i32_o128": {
+          "input_tokens": 32,
+          "output_tokens": 128,
+          "round_count": 2,
+          "avg_ttft_ms": 0.3527537046466023,
+          "avg_prefill_ms": 0.3527537046466023,
+          "prefill_per_input_token_us": 11.023553270206321,
+          "avg_tpot_ms": 0.25607168767967914,
+          "geomean_decode_tps": 3905.6265296611396,
+          "avg_e2e_ms": 49.85920711187646
+        },
+        "i32_o512": {
+          "input_tokens": 32,
+          "output_tokens": 512,
+          "round_count": 2,
+          "avg_ttft_ms": 0.3531029913574457,
+          "avg_prefill_ms": 0.3531029913574457,
+          "prefill_per_input_token_us": 11.034468479920179,
+          "avg_tpot_ms": 0.24588950303676602,
+          "geomean_decode_tps": 4066.8703853877196,
+          "avg_e2e_ms": 188.1463867961429
+        },
+        "i128_o64": {
+          "input_tokens": 128,
+          "output_tokens": 64,
+          "round_count": 2,
+          "avg_ttft_ms": 0.338484306121245,
+          "avg_prefill_ms": 0.338484306121245,
+          "prefill_per_input_token_us": 2.6444086415722268,
+          "avg_tpot_ms": 0.25050340761755785,
+          "geomean_decode_tps": 3992.6649886853597,
+          "avg_e2e_ms": 24.899733311031014
+        },
+        "i128_o128": {
+          "input_tokens": 128,
+          "output_tokens": 128,
+          "round_count": 2,
+          "avg_ttft_ms": 0.361738697392866,
+          "avg_prefill_ms": 0.361738697392866,
+          "prefill_per_input_token_us": 2.8260835733817657,
+          "avg_tpot_ms": 0.2528452348352711,
+          "geomean_decode_tps": 3955.1821167314283,
+          "avg_e2e_ms": 49.29998880252242
+        },
+        "i128_o512": {
+          "input_tokens": 128,
+          "output_tokens": 512,
+          "round_count": 2,
+          "avg_ttft_ms": 0.34930118708871305,
+          "avg_prefill_ms": 0.34930118708871305,
+          "prefill_per_input_token_us": 2.7289155241305707,
+          "avg_tpot_ms": 0.24877659191191562,
+          "geomean_decode_tps": 4019.7059473470335,
+          "avg_e2e_ms": 190.56129290838726
+        },
+        "i512_o64": {
+          "input_tokens": 512,
+          "output_tokens": 64,
+          "round_count": 2,
+          "avg_ttft_ms": 0.360398693010211,
+          "avg_prefill_ms": 0.360398693010211,
+          "prefill_per_input_token_us": 0.7039036972855683,
+          "avg_tpot_ms": 0.2506787257660772,
+          "geomean_decode_tps": 3990.026260054495,
+          "avg_e2e_ms": 25.05920001422055
+        },
+        "i512_o128": {
+          "input_tokens": 512,
+          "output_tokens": 128,
+          "round_count": 2,
+          "avg_ttft_ms": 0.35225030151195824,
+          "avg_prefill_ms": 0.35225030151195824,
+          "prefill_per_input_token_us": 0.6879888701405434,
+          "avg_tpot_ms": 0.24896207509386376,
+          "geomean_decode_tps": 4018.749283322985,
+          "avg_e2e_ms": 48.56156230089255
+        },
+        "i512_o512": {
+          "input_tokens": 512,
+          "output_tokens": 512,
+          "round_count": 2,
+          "avg_ttft_ms": 0.37866729544475675,
+          "avg_prefill_ms": 0.37866729544475675,
+          "prefill_per_input_token_us": 0.7395845614155405,
+          "avg_tpot_ms": 0.24966162912148449,
+          "geomean_decode_tps": 4006.486841530991,
+          "avg_e2e_ms": 191.15103269577958
+        },
+        "i1024_o64": {
+          "input_tokens": 1024,
+          "output_tokens": 64,
+          "round_count": 2,
+          "avg_ttft_ms": 0.3645337943453342,
+          "avg_prefill_ms": 0.3645337943453342,
+          "prefill_per_input_token_us": 0.3559900335403654,
+          "avg_tpot_ms": 0.2539058917179881,
+          "geomean_decode_tps": 3938.9376776574313,
+          "avg_e2e_ms": 25.405788491480052
+        },
+        "i1024_o128": {
+          "input_tokens": 1024,
+          "output_tokens": 128,
+          "round_count": 2,
+          "avg_ttft_ms": 0.40069109527394176,
+          "avg_prefill_ms": 0.40069109527394176,
+          "prefill_per_input_token_us": 0.39129989772845875,
+          "avg_tpot_ms": 0.2544012524308563,
+          "geomean_decode_tps": 3932.7271542209533,
+          "avg_e2e_ms": 49.79686710285023
+        },
+        "i1024_o512": {
+          "input_tokens": 1024,
+          "output_tokens": 512,
+          "round_count": 2,
+          "avg_ttft_ms": 0.3732414043042809,
+          "avg_prefill_ms": 0.3732414043042809,
+          "prefill_per_input_token_us": 0.3644935588908993,
+          "avg_tpot_ms": 0.24687766385448773,
+          "geomean_decode_tps": 4050.5900918344482,
+          "avg_e2e_ms": 189.41693709348328
+        }
+      }
+    },
+    "peter": {
+      "label": "peter RISC-V / p550dummy branch",
+      "note": "Ran on p550dummy source with VLLM_TARGET_DEVICE=cpu and dummy execution enabled.",
+      "rounds": [
+        {
+          "round": 1,
+          "path": "/home/zyz/vLLM_deploy/vllm_p550dummy/benchmarks/results/p550dummy_zero_rerun_three_platform_20260610/peter_p550dummy_zero_2rounds/peter_round1/matrix_results.json",
+          "success_count": 12,
+          "total_cases": 12,
+          "avg_ttft_ms": 1.354602333837344,
+          "avg_prefill_ms": 1.354602333837344,
+          "avg_tpot_ms": 0.7692064108684454,
+          "geomean_decode_tps": 1300.1024468014937,
+          "avg_e2e_ms": 402.9204255666021,
+          "avg_host_adjusted_e2e_ms": 221.99867112673624
+        },
+        {
+          "round": 2,
+          "path": "/home/zyz/vLLM_deploy/vllm_p550dummy/benchmarks/results/p550dummy_zero_rerun_three_platform_20260610/peter_p550dummy_zero_2rounds/peter_round2/matrix_results.json",
+          "success_count": 12,
+          "total_cases": 12,
+          "avg_ttft_ms": 1.3805808664377157,
+          "avg_prefill_ms": 1.3805808664377157,
+          "avg_tpot_ms": 0.7696753520111578,
+          "geomean_decode_tps": 1299.3177721279435,
+          "avg_e2e_ms": 410.76847636698704,
+          "avg_host_adjusted_e2e_ms": 230.40060088824248
+        }
+      ],
+      "validation_failures": [],
+      "combined": {
+        "success_count": 24,
+        "total_cases": 24,
+        "avg_ttft_ms": 1.36759160013753,
+        "stdev_round_avg_ttft_ms": 0.018369596566998582,
+        "avg_prefill_ms": 1.36759160013753,
+        "avg_tpot_ms": 0.7694408814398016,
+        "stdev_round_avg_tpot_ms": 0.00033159146198926586,
+        "geomean_decode_tps": 1299.71005024821,
+        "avg_e2e_ms": 406.84445096679457,
+        "avg_host_adjusted_e2e_ms": 226.19963600748935
+      },
+      "cases": {
+        "i32_o64": {
+          "input_tokens": 32,
+          "output_tokens": 64,
+          "round_count": 2,
+          "avg_ttft_ms": 1.2487979009165429,
+          "avg_prefill_ms": 1.2487979009165429,
+          "prefill_per_input_token_us": 39.024934403641964,
+          "avg_tpot_ms": 0.7635543379047516,
+          "geomean_decode_tps": 1309.6652714981549,
+          "avg_e2e_ms": 116.48800950060831
+        },
+        "i32_o128": {
+          "input_tokens": 32,
+          "output_tokens": 128,
+          "round_count": 2,
+          "avg_ttft_ms": 1.278800996078644,
+          "avg_prefill_ms": 1.278800996078644,
+          "prefill_per_input_token_us": 39.96253112745762,
+          "avg_tpot_ms": 0.7706941158018501,
+          "geomean_decode_tps": 1297.5513108730165,
+          "avg_e2e_ms": 227.09467290114844
+        },
+        "i32_o512": {
+          "input_tokens": 32,
+          "output_tokens": 512,
+          "round_count": 2,
+          "avg_ttft_ms": 1.3142865020199679,
+          "avg_prefill_ms": 1.3142865020199679,
+          "prefill_per_input_token_us": 41.071453188123996,
+          "avg_tpot_ms": 0.7631223714683084,
+          "geomean_decode_tps": 1310.4457290475846,
+          "avg_e2e_ms": 882.2531822021119
+        },
+        "i128_o64": {
+          "input_tokens": 128,
+          "output_tokens": 64,
+          "round_count": 2,
+          "avg_ttft_ms": 1.2857914014603011,
+          "avg_prefill_ms": 1.2857914014603011,
+          "prefill_per_input_token_us": 10.045245323908603,
+          "avg_tpot_ms": 0.7674044715092769,
+          "geomean_decode_tps": 1303.1323506876515,
+          "avg_e2e_ms": 114.24234799778787
+        },
+        "i128_o128": {
+          "input_tokens": 128,
+          "output_tokens": 128,
+          "round_count": 2,
+          "avg_ttft_ms": 1.2871949977125041,
+          "avg_prefill_ms": 1.2871949977125041,
+          "prefill_per_input_token_us": 10.056210919628938,
+          "avg_tpot_ms": 0.7650286854473016,
+          "geomean_decode_tps": 1307.1458889082528,
+          "avg_e2e_ms": 230.01741589978337
+        },
+        "i128_o512": {
+          "input_tokens": 128,
+          "output_tokens": 512,
+          "round_count": 2,
+          "avg_ttft_ms": 1.3123982993420213,
+          "avg_prefill_ms": 1.3123982993420213,
+          "prefill_per_input_token_us": 10.253111713609542,
+          "avg_tpot_ms": 0.7662531993220425,
+          "geomean_decode_tps": 1305.0519329409208,
+          "avg_e2e_ms": 874.4759182969574
+        },
+        "i512_o64": {
+          "input_tokens": 512,
+          "output_tokens": 64,
+          "round_count": 2,
+          "avg_ttft_ms": 1.372400700347498,
+          "avg_prefill_ms": 1.372400700347498,
+          "prefill_per_input_token_us": 2.680470117866207,
+          "avg_tpot_ms": 0.7769765441365066,
+          "geomean_decode_tps": 1287.1098171604644,
+          "avg_e2e_ms": 120.78015870210947
+        },
+        "i512_o128": {
+          "input_tokens": 512,
+          "output_tokens": 128,
+          "round_count": 2,
+          "avg_ttft_ms": 1.3766026982921176,
+          "avg_prefill_ms": 1.3766026982921176,
+          "prefill_per_input_token_us": 2.688677145101792,
+          "avg_tpot_ms": 0.7694479833149872,
+          "geomean_decode_tps": 1299.640639489927,
+          "avg_e2e_ms": 225.68983569799457
+        },
+        "i512_o512": {
+          "input_tokens": 512,
+          "output_tokens": 512,
+          "round_count": 2,
+          "avg_ttft_ms": 1.3951042012195103,
+          "avg_prefill_ms": 1.3951042012195103,
+          "prefill_per_input_token_us": 2.724812893006856,
+          "avg_tpot_ms": 0.7613515239153121,
+          "geomean_decode_tps": 1313.4537573176667,
+          "avg_e2e_ms": 868.5050356012653
+        },
+        "i1024_o64": {
+          "input_tokens": 1024,
+          "output_tokens": 64,
+          "round_count": 2,
+          "avg_ttft_ms": 1.4860060007777065,
+          "avg_prefill_ms": 1.4860060007777065,
+          "prefill_per_input_token_us": 1.451177735134479,
+          "avg_tpot_ms": 0.7827571838759699,
+          "geomean_decode_tps": 1277.5862923611244,
+          "avg_e2e_ms": 116.59647799970116
+        },
+        "i1024_o128": {
+          "input_tokens": 1024,
+          "output_tokens": 128,
+          "round_count": 2,
+          "avg_ttft_ms": 1.5397072027553804,
+          "avg_prefill_ms": 1.5397072027553804,
+          "prefill_per_input_token_us": 1.5036203151908012,
+          "avg_tpot_ms": 0.7736171006227799,
+          "geomean_decode_tps": 1292.6892414097442,
+          "avg_e2e_ms": 227.74039600190008
+        },
+        "i1024_o512": {
+          "input_tokens": 1024,
+          "output_tokens": 512,
+          "round_count": 2,
+          "avg_ttft_ms": 1.5140083007281646,
+          "avg_prefill_ms": 1.5140083007281646,
+          "prefill_per_input_token_us": 1.4785237311798483,
+          "avg_tpot_ms": 0.7730830599585322,
+          "geomean_decode_tps": 1293.526712092156,
+          "avg_e2e_ms": 878.2499608001672
+        }
+      }
+    }
+  },
+  "dude": {
+    "platform": "dude",
+    "status": "blocked",
+    "created_at_unix": 1781054897.961571,
+    "ssh_alias": "dude",
+    "host": "192.168.1.57",
+    "user": "eswin",
+    "reason": "Network/SSH unreachable from both WSL and Windows; benchmark was not started.",
+    "checks": [
+      {
+        "source": "WSL ssh dude",
+        "result": "No route to host"
+      },
+      {
+        "source": "WSL ping 192.168.1.57",
+        "result": "100% packet loss / Destination Host Unreachable"
+      },
+      {
+        "source": "WSL nc 192.168.1.57 22",
+        "result": "No route to host or timeout"
+      },
+      {
+        "source": "Windows Test-NetConnection 192.168.1.57 -Port 22",
+        "result": "DestinationHostUnreachable, as reported by dude worker agent"
+      }
+    ],
+    "valid_benchmark_score": null,
+    "success_count_by_round": {
+      "round1": "0/12 not started",
+      "round2": "0/12 not started"
+    }
+  }
+}
