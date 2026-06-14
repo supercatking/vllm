@@ -151,6 +151,33 @@ def xpu_platform_plugin() -> str | None:
     return "vllm.platforms.xpu.XPUPlatform" if is_xpu else None
 
 
+def _p550_npu_backend_requested() -> bool:
+    target_device = envs.VLLM_TARGET_DEVICE.replace("-", "_")
+    if target_device == "p550_npu":
+        return True
+
+    backend = os.getenv("VLLM_P550_NPU_BACKEND", "").strip().lower()
+    backend = backend.replace("-", "_")
+    return backend in {
+        "1",
+        "true",
+        "yes",
+        "on",
+        "fallback",
+        "compare",
+        "npu",
+        "p550_npu",
+    }
+
+
+def p550_npu_platform_plugin() -> str | None:
+    logger.debug("Checking if P550 NPU platform is requested.")
+    if not _p550_npu_backend_requested():
+        return None
+    logger.debug("Confirmed P550 NPU platform is requested.")
+    return "vllm.platforms.p550_npu.P550NpuPlatform"
+
+
 def _is_amd_zen_cpu() -> bool:
     """Detect AMD CPU with AVX-512 via /proc/cpuinfo."""
     if not os.path.exists("/proc/cpuinfo"):
@@ -161,6 +188,10 @@ def _is_amd_zen_cpu() -> bool:
 
 
 def cpu_platform_plugin() -> str | None:
+    if _p550_npu_backend_requested():
+        logger.debug("CPU platform is not activated because P550 NPU is requested.")
+        return None
+
     is_cpu = False
     logger.debug("Checking if CPU platform is available.")
     try:
@@ -205,6 +236,7 @@ builtin_platform_plugins = {
     "cuda": cuda_platform_plugin,
     "rocm": rocm_platform_plugin,
     "xpu": xpu_platform_plugin,
+    "p550_npu": p550_npu_platform_plugin,
     "cpu": cpu_platform_plugin,
 }
 
